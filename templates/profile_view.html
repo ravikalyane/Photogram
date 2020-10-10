@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{profile.user.first_name}} {{profile.user.last_name}}{% endblock %}
+{% block content %}
+<!-- If user is authenticated -->
+{% if user.is_authenticated %}
+<div class="user-info m-3">
+    <div>
+        {%if user.userprofile.profile_photo%}
+        <img class="rounded-circle profile-photo" src="{{user.userprofile.profile_photo.url}}" alt="">
+        {%else%}
+        <i class="fad fa-user-circle" style="font-size: 100px"></i>
+        {%endif%}
+    </div>
+
+    <div class="text-center">
+        <p><strong>{{total_posts}}</strong></p>
+        <p class="bold">Posts</p>
+    </div>
+
+    <div class="text-center">
+        <p><strong>0</strong></p>
+        <p class="bold">Followers</p>
+    </div>
+
+    <div class="text-center">
+        <p><strong>0</strong></p>
+        <p class="bold">Following</p>
+    </div>
+</div>
+
+<div class="m-3">
+    <strong>{{profile.user.first_name}} {{profile.user.last_name}}</strong>
+    <div>{{profile.bio}}</div>
+    <div>{% if profile.location %}<i class="fal fa-map-pin"></i> {{profile.location}}{%endif %}</div>
+    <div><i class="fal fa-envelope"></i> {{profile.user.email}}</div>
+</div>
+
+<div class="user-photos">
+    <div class="row">
+        {% for photo in photos %}
+        <a href="{% url 'post_detail' photo.pk%}"><img src="{{photo.photo.url}}" alt=""></a>
+        {% endfor %}
+    </div>
+</div>
+{%else%}
+<!-- Guest User -->
+<div class="guest">
+    <p>Please login or create an account</p>
+    <p>
+        <a href="{%url 'login'%}"><button class="btn btn-primary btn-sm">Login</button></a>
+        <a href="{%url 'register'%}"><button class="btn btn-primary btn-sm">Register</button></a>
+    </p>
+</div>
+{%endif%}
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Friends{% endblock %}
+{% block content %}
+
+{% if request.user.is_authenticated %}
+
+{% for user in user %}
+<div class="friends">
+    <span class="m-2">
+        {%if user.userprofile.profile_photo%}
+            <img class="img-icon" src="{{user.userprofile.profile_photo.url}}" width="30px" alt="">
+        {%else%}
+            <i class="fad fa-user-circle" style="font-size:30px;"></i>
+        {%endif%}
+    </span>
+    <span class="m-2">
+        <a href="{% url 'profile_view' user.id %}">{{user.username}}</a>
+    </span>
+</div>
+{% endfor %}
+
+{%else%}
+<!-- Guest User -->
+<div class="guest">
+    <p>Please login or create an account</p>
+    <p>
+        <a href="{%url 'login'%}">
+            <button class="btn btn-primary btn-sm">Login</button>
+        </a>
+        <a href="{%url 'register'%}">
+            <button class="btn btn-primary btn-sm">Register</button>
+        </a>
+    </p>
+</div>
+{%endif%}
+
+{% endblock %}

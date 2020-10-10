@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{request.username}}{% endblock %}
+{% block content %}
+<div class="feed-top-bar">
+    <div>
+        {%if photo.user.userprofile.profile_photo%}
+        <img class="img-icon" src="{{photo.user.userprofile.profile_photo.url}}" alt="">
+        {%else%}
+        <i class="fad fa-user-circle" style="font-size:30px;"></i>
+        {%endif%}
+    </div>
+    <div class="flex-col">
+        <span><strong>{{photo.user.username}}</strong></span>
+        {% if photo.location %}<span class="location text-muted">{{photo.location}}</span>{% endif %}
+    </div>
+</div>
+<img class="img-fluid" src="{{photo.photo.url}}" alt="">
+<div class="post-info">
+    <div class="actions-main">
+        <!--Like Form-->
+        <form action="{%url 'like_photo' photo.pk%}" method="post">
+            {% csrf_token %}
+            <button name="photo_id" value="{{photo.id}}" type="submit">
+                {% if request.user in photo.likes.all %}
+                <i class="fas fa-heart" style="color: red;"></i>
+                {% else %}
+                <i class="fal fa-heart"></i>
+                {% endif %}
+            </button>
+        </form>
+        <span>
+        {% if request.user == photo.user%}
+        <!-- Button trigger modal -->
+        <button type="button" class="btn-clean" data-toggle="modal" data-target="#exampleModalCenter">
+  <i class="fad fa-trash"></i>
+</button>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Delete Post</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          Are you sure you want to delete this post?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Go back</button>
+        <a href="{% url 'delete_post' photo.id %}"><button type="button" class="btn btn-danger">Delete</button></a>
+      </div>
+    </div>
+  </div>
+</div>
+        <a href="{% url 'edit_post' photo.id %}"><i class="fal fa-file-edit"></i></a>
+        {% endif %}
+        </span>
+    </div>
+    <!--Like Counter-->
+    <strong>
+        {% if photo.likes.count == 1 %}
+        {{photo.likes.count}} like
+        {% else %}
+        {{photo.likes.count}} likes
+        {% endif %}
+    </strong>
+    <div><strong>{{photo.user.username}} </strong>{{photo.caption}}</div>
+
+    <!-- Comments -->
+    <div class="comments mt-2">
+        <h6>Comments ({{comment_count}})</h6>
+        {%for comment in comment%}
+        <div><strong>{{comment.user}}:</strong> {{comment.comment}}</div>
+        {%endfor%}
+    </div>
+
+    <!-- Comment Form -->
+    <div class="comment-form mt-1">
+        <form action="" method="post" autocomplete="off">
+            {%csrf_token%}
+            {{form}}
+            <button class="btn-comment"><i class="fal fa-paper-plane"></i></button>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Photogram 3.0{% endblock %}
+{% block content %}
+
+<!-- Guest User -->
+<div class="guest">
+    <p>Please login or create an account</p>
+    <p>
+        <a href="{%url 'login'%}"><button class="btn btn-primary btn-sm">Login</button></a>
+        <a href="{%url 'register'%}"><button class="btn btn-primary btn-sm">Register</button></a>
+    </p>
+</div>
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Settings{% endblock %}
+{% block content %}
+
+<!-- If user is authenticated -->
+{% if user.is_authenticated %}
+<div class="guest">
+
+    <button class="btn btn-light btn-block"><a href="{% url 'draft' %}">Drafts</a></button>
+    <button class="btn btn-light btn-block"><a href="{% url 'edit_profile' user.id%}">Edit Profile</a></button>
+    <button class="btn btn-light btn-block"><a href="{% url 'add_dp' user.id%}">Change Profile Photo</a></button>
+    <button class="btn btn-light btn-block"><a href="#">Change Password</a></button>
+    <button class="btn btn-light btn-block"><a href="{% url 'logout' %}">Logout</a></button>
+
+</div>
+
+{%else%}
+<!-- Guest User -->
+<div class="guest">
+    <p>Please login or create an account</p>
+    <p>
+        <a href="{%url 'login'%}"><button class="btn btn-primary btn-sm">Login</button></a>
+        <a href="{%url 'register'%}"><button class="btn btn-primary btn-sm">Register</button></a>
+    </p>
+</div>
+{%endif%}
+
+{% endblock %}

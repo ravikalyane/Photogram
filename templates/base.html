@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" />
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
+        {% block css%}{% endblock%}
+
+        <!-- Fontawesome -->
+        <link rel="stylesheet" type="text/css" href="https://kit-pro.fontawesome.com/releases/v5.13.0/css/pro.min.css" />
+
+        <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+
+        <title>{% block title %}{% endblock %}</title>
+    </head>
+    <body>
+        <main>
+            <nav class="user-navbar myfont">
+                {%if user.is_authenticated%}{{request.user.first_name}} {{request.user.last_name}}{%else%}PhotoGram{%endif%}
+            </nav>
+
+            {% block content %} {% endblock %}
+
+            <nav class="bottom-navbar">
+                <a href="{% url 'feed' %}"><i class="fal fa-home-alt"></i></a>
+
+                <a href="{% url 'friends' %}"><i class="fad fa-users"></i></a>
+
+                <a href="{% url 'add_photo' %}"><i class="fal fa-plus-square"></i></a>
+
+                <a href="{% url 'settings' %}"><i class="fal fa-cog"></i></a>
+
+                {%if user.is_authenticated and user.userprofile.profile_photo%}
+                <a href="{% url 'profile' %}"><img class="img-icon" src="{{user.userprofile.profile_photo.url}}" alt="" /></a>
+                {% else %}
+                <a href="{% url 'profile' %}"><i class="fad fa-user-circle"></i></a>
+                {% endif %}
+            </nav>
+        </main>
+    </body>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    {% block javascript%} {% endblock %}
+</html>
