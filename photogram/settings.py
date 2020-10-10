@@ -121,24 +121,3 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images/')
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
-
-# S3 BUCKETS CONFIG
-'''
-
-AWS_ACCESS_KEY_ID = 'AKIATIZ76CLKCKOLE5N7'
-AWS_SECRET_ACCESS_KEY = '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'
-AWS_STORAGE_BUCKET_NAME = 'ravikalyane-bucket'
-AWS_S3_FILE_OVERWRITE = False
-AWS_DEFAULT_ACL = None
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-AWS_S3_REGION_NAME = "ap-south-1"
-AWS_S3_SIGNATURE_VERSION = 's3v4'
-s3 = boto3.resource(
-    's3',
-    aws_access_key_id='AKIATIZ76CLKCKOLE5N7',
-    aws_secret_access_key='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',
-    region_name='ap-south-1',
-    config=Config(signature_version='s3v4')
-)
-'''
